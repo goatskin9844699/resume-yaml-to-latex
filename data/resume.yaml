@@ -56,11 +56,13 @@ experiences:
       - Collaborated with cross-functional teams to deliver seamless user experiences
 
 education:
-  - school: Stanford University
-    degrees:
-      - names:
-          - M.S. Computer Science
-  - school: University of California, Berkeley
-    degrees:
-      - names:
-          - B.S. Computer Science 
+  - name: M.S. Computer Science
+    school: Stanford University
+    startdate: "2022"
+    enddate: "2024"
+    highlights:
+      - "Thesis: \"Machine Learning Applications in Distributed Systems\""
+  - name: B.S. Computer Science
+    school: University of California, Berkeley
+    startdate: "2019"
+    enddate: "2022"

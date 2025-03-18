@@ -13,15 +13,13 @@ class BasicInfo(BaseModel):
     websites: Optional[List[str]] = Field(default_factory=list)
 
 
-class Degree(BaseModel):
-    """Educational degree information."""
-    names: List[str]
-
-
 class Education(BaseModel):
     """Education entry."""
+    name: str
     school: str
-    degrees: List[Degree]
+    startdate: str
+    enddate: str
+    highlights: Optional[List[str]] = Field(default_factory=list)
 
 
 class Title(BaseModel):

@@ -85,12 +85,20 @@ ${objective}
 \vspace{-2mm}  
 \begin{entrylist}
 <% for edu in education %>
-<% for degree in edu.degrees %>
 	\entry
+	{${edu.startdate}\,\textendash\,${edu.enddate}}
+	{${edu.name}}
 	{${edu.school}}
-	{${', '.join(degree.names)}}
-	{}
-<% endfor %>
+	{
+	<% if edu.highlights %>
+	\vspace{-3mm}
+	\begin{itemize}[leftmargin=5mm]
+		<% for highlight in edu.highlights %>
+		\item ${highlight}
+		<% endfor %>
+	\end{itemize}
+	<% endif %>
+	}
 <% endfor %>
 \end{entrylist}
 
