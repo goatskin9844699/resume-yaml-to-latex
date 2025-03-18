@@ -33,6 +33,8 @@ output/
 *.log
 *.out
 *.synctex.gz
+data/resume.tex
+data/*.pdf
 
 # OS
 .DS_Store
