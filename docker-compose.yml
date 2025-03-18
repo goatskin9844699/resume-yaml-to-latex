@@ -5,4 +5,7 @@ services:
     build: .
     volumes:
       - ./data:/app/data
-    command: data/resume.yaml data/resume.tex 
+    environment:
+      - INPUT_YAML=${INPUT_YAML:-data/resume.yaml}
+      - OUTPUT_TEX=${OUTPUT_TEX:-data/resume.tex}
+    command: ${INPUT_YAML:-data/resume.yaml} ${OUTPUT_TEX:-data/resume.tex} 

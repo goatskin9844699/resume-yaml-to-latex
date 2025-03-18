@@ -35,6 +35,8 @@ output/
 *.synctex.gz
 data/resume.tex
 data/*.pdf
+data/*.yaml
+!data/resume.yaml
 
 # OS
 .DS_Store
