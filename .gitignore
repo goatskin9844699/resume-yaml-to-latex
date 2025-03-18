@@ -20,11 +20,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual Environment
-venv/
-ENV/
-env/
-
 # IDE
 .idea/
 .vscode/
@@ -41,4 +36,7 @@ output/
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Docker
+.docker/ 

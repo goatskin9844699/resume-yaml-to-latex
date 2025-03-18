@@ -1,128 +1,125 @@
 # Resume YAML to LaTeX Converter
 
-A Python tool that converts YAML-formatted resume data into LaTeX files. This tool is designed to work with various LaTeX resume templates, with initial support for the Friggeri CV template.
+A Python tool that converts YAML-formatted resume data into LaTeX documents using various templates.
 
 ## Features
 
 - Convert YAML resume data to LaTeX format
-- Support for multiple LaTeX templates
-- YAML validation and error reporting
-- Command-line interface
-- Python API for programmatic use
-- Extensible template system
+- Support for multiple LaTeX templates (currently Friggeri)
+- Easy to extend with new templates
+- Docker support for isolated environments
 
 ## Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/resume-yaml-to-latex.git
-cd resume-yaml-to-latex
+### Using Docker (Recommended)
 
-# Install in development mode
-pip install -e .
-```
+1. Build the Docker image:
+   ```bash
+   docker-compose build
+   ```
+
+2. Generate a resume:
+   ```bash
+   docker-compose run resume-generator examples/sample_resume.yaml output/resume.tex
+   ```
+
+### Local Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/resume-yaml-to-latex.git
+   cd resume-yaml-to-latex
+   ```
+
+2. Install the package:
+   ```bash
+   pip install -e .
+   ```
 
 ## Usage
 
 ### Command Line Interface
 
 ```bash
-# Generate LaTeX from YAML
-resume-yaml-to-latex generate resume.yaml -o resume.tex
-
-# Show help
-resume-yaml-to-latex --help
+resume-yaml-to-latex input.yaml output.tex [--template TEMPLATE]
 ```
+
+Options:
+- `input.yaml`: Path to the YAML file containing resume data
+- `output.tex`: Path where to save the generated LaTeX file
+- `--template`: Template to use (default: friggeri)
 
 ### Python API
 
 ```python
-from resume_yaml_to_latex import ResumeGenerator
+from resume_yaml_to_latex.parser import ResumeParser
+from resume_yaml_to_latex.templates.friggeri import FriggeriTemplate
 
-# Create generator instance
-generator = ResumeGenerator()
+# Parse YAML data
+resume = ResumeParser.parse("resume.yaml")
 
-# Generate LaTeX file
-generator.generate('resume.yaml', 'resume.tex')
+# Create template and generate LaTeX
+template = FriggeriTemplate()
+template.set_resume(resume)
+latex_content = template.generate()
+
+# Save to file
+with open("resume.tex", "w") as f:
+    f.write(latex_content)
 ```
 
 ## YAML Format
 
-The tool expects a YAML file with the following structure:
+The YAML file should follow this structure:
 
 ```yaml
 basic:
   name: John Doe
-  address: Los Angeles, CA
-  email: johndoe@example.com
-  phone: 555-123-4567
-  websites:
-    - https://linkedin.com/johndoe
-    - https://github.com/johndoe
+  address: San Francisco, CA, USA
+  phone: +1 (555) 123-4567
+  email: john.doe@example.com
 
-objective: A Software Engineer with over 8 years of experience...
+objective: A brief professional summary...
 
-education:
-  - school: University of California, Berkeley
-    degrees:
-      - names:
-          - B.S. Computer Science
-  - school: Stanford University
-    degrees:
-      - names:
-          - M.S. Computer Science
+skills:
+  - category: Technical
+    skills:
+      - Python
+      - JavaScript
+      - AWS
+  - category: Non-technical
+    skills:
+      - Strong problem-solving skills
+      - Excellent communication
 
 experiences:
   - company: Tech Innovators Inc.
     location: San Francisco, CA
     titles:
       - name: Lead Software Engineer
-        startdate: 2022
-        enddate: 2024
+        startdate: "2022"
+        enddate: "2024"
     highlights:
       - Led the development of a cloud-based platform...
       - Implemented a microservices architecture...
 
-skills:
-  - category: Technical
-    skills:
-      - JavaScript
-      - Python
-      - AWS
-      - Docker
+education:
+  - school: Stanford University
+    degrees:
+      - names:
+          - M.S. Computer Science
 ```
 
-## Development
+## Templates
 
-### Project Structure
+### Friggeri Template
 
-```
-resume-yaml-to-latex/
-├── src/
-│   ├── __init__.py
-│   ├── main.py           # CLI interface
-│   ├── parser.py         # YAML parsing and validation
-│   ├── generator.py      # LaTeX generation logic
-│   └── templates/        # Template definitions
-│       ├── __init__.py
-│       ├── base.py       # Base template class
-│       └── friggeri.py   # Friggeri-specific template
-├── tests/               # Test files
-├── examples/           # Example YAML files
-├── requirements.txt
-├── setup.py
-└── README.md
-```
-
-### Running Tests
-
-```bash
-# Install test dependencies
-pip install -e ".[test]"
-
-# Run tests
-pytest
-```
+A modern, clean template based on the Friggeri CV style. Features:
+- Professional layout
+- Clear section separation
+- Skills categorization
+- Experience timeline
+- Education section
 
 ## Contributing
 

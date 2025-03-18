@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  resume-generator:
+    build: .
+    volumes:
+      - ./examples:/app/examples
+      - ./output:/app/output
+    command: examples/sample_resume.yaml output/resume.tex 
