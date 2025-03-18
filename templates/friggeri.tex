@@ -1,0 +1,97 @@
+%!TEX TS-program = xelatex
+\documentclass[]{friggeri-cv}
+
+% prevent latex from hypenation
+\hyphenpenalty=10000
+
+% allow modification of list indent
+\usepackage{enumitem}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% Custom commands for publications
+\newenvironment{publications}
+  {\section{Publications}
+   \begin{enumerate}[leftmargin=6mm, itemsep=4mm, label={[\arabic*]}]}
+  {\end{enumerate}}
+
+% Define a custom environment for skills
+\newenvironment{skills}{%
+  \par\noindent%
+}{%
+}
+
+% Define commands for skills section
+\newcommand{\skillsep}{%
+  \par%
+  \vspace{-3mm}
+  \noindent%
+  \textcolor{gray!30}{\rule{0.5\textwidth}{0.5pt}}%
+  \vspace{-2mm}\par\vspace{-1mm}%
+}
+
+\newcommand{\category}[1]{%
+  \par\noindent\textbf{#1:}\hspace{0.5em}%
+}
+
+\begin{document}
+% define contact information
+\contact{${basic.address}}{${basic.phone}}{${basic.email}}
+
+\header{${basic.name_first}}{${basic.name_last}}{}
+    
+\vspace{5mm}
+\section{Professional Summary}    
+\vspace{-2mm}
+${objective}
+
+\section{Technical Skills}
+\vspace{-2mm}
+\begin{skills}
+<% for skill in skills %>
+\category{${skill.category}}${', '.join(skill.skills)}
+
+\skillsep
+<% endfor %>
+\end{skills}
+
+\vspace{1mm}
+\section{Professional Experience}
+\vspace{-3mm}  
+\begin{entrylist}
+<% for experience in experiences %>
+<% for title in experience.titles %>
+\entry
+{${title.startdate}\,\textendash\ ${title.enddate}}
+{${title.name}}
+{${experience.company}, ${experience.location}}
+{
+	\vspace{-3mm}
+	\begin{itemize}[leftmargin=5mm]
+	<% for highlight in experience.highlights %>
+		\item ${highlight}
+	<% endfor %>
+	\end{itemize}
+}
+<% endfor %>
+<% endfor %>
+\end{entrylist}
+
+\vspace{-9mm}
+\section{Education}
+
+\vspace{-2mm}  
+\begin{entrylist}
+<% for edu in education %>
+<% for degree in edu.degrees %>
+	\entry
+	{${edu.school}}
+	{${', '.join(degree.names)}}
+	{}
+<% endfor %>
+<% endfor %>
+\end{entrylist}
+
+\end{document} 
