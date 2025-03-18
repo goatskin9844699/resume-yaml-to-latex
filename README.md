@@ -1,21 +1,28 @@
 # Resume YAML to LaTeX
 
-A Python tool to generate LaTeX resumes from YAML data. This tool allows you to maintain your resume data in a structured YAML format and convert it to a beautiful LaTeX document.
+A Python tool to generate LaTeX resumes from YAML data. This tool allows you to maintain your resume data in a structured YAML format and convert it to a beautiful LaTeX document using the Friggeri template.
 
-## Features
+## Quick Start
 
-- Convert YAML resume data to LaTeX format
-- Support for multiple LaTeX templates (currently includes Friggeri template)
-- Docker support for easy deployment and consistent LaTeX compilation
-- Command-line interface for easy use
-- Python API for programmatic usage
+1. Create your resume in YAML format (see example in `data/resume.yaml`)
+
+2. Run using Docker (recommended):
+   ```bash
+   # Using the provided script (recommended)
+   ./generate-resume.sh path/to/your/resume.yaml
+
+   # Or using docker-compose directly
+   INPUT_YAML=path/to/your/resume.yaml docker-compose up --build
+   ```
+
+The generated LaTeX file will be in the `data` directory.
 
 ## Project Structure
 
 ```
 resume-yaml-to-latex/
 ├── data/                    # Input/output data directory
-│   ├── resume.yaml         # Your resume data
+│   ├── resume.yaml         # Example resume data
 │   └── resume.tex          # Generated LaTeX file
 ├── src/
 │   └── resume_yaml_to_latex/
@@ -26,30 +33,80 @@ resume-yaml-to-latex/
 │       └── templates/      # LaTeX templates
 │           ├── base.py
 │           └── friggeri.py
+├── templates/              # LaTeX template files
 ├── Dockerfile
 ├── docker-compose.yml
-├── requirements.txt
-├── setup.py
 └── README.md
+```
+
+## YAML Format
+
+Your resume data should be structured in YAML format as follows:
+
+```yaml
+basic:
+  name: "Your Name"
+  address: "City, Country"
+  email: "your.email@example.com"
+  phone: "+1 234 567 8900"
+  websites: []  # Optional list of websites
+
+objective: "A brief professional summary"
+
+education:
+  - name: "Degree Name"
+    school: "University Name"
+    startdate: "2020"
+    enddate: "2024"
+    highlights:  # Optional
+      - "Thesis: \"Your Thesis Title\""
+      - "Relevant course work: Course 1, Course 2, Course 3"
+
+experiences:
+  - company: "Company Name"
+    location: "City, Country"
+    titles:
+      - name: "Job Title"
+        startdate: "2022"
+        enddate: "2024"
+    highlights:
+      - "Achievement or responsibility"
+      - "Another achievement or responsibility"
+
+skills:
+  - category: "Technical"
+    skills:
+      - "Skill 1"
+      - "Skill 2"
+  - category: "Non-technical"
+    skills:
+      - "Skill 1"
+      - "Skill 2"
+
+publications:  # Optional
+  - authors: "\\textbf{Your Name}, Co-author One, Co-author Two"
+    title: "Your Publication Title"
+    conference: "Conference Name"
+    location: "City, Country"
+    date: "2024"
 ```
 
 ## Using Docker (Recommended)
 
-1. Build the Docker image:
+1. Make sure Docker and docker-compose are installed on your system
+
+2. Create your resume in YAML format
+
+3. Generate your resume using one of these methods:
    ```bash
-   docker-compose build
+   # Using the provided script
+   ./generate-resume.sh path/to/your/resume.yaml
+
+   # Or using docker-compose directly
+   INPUT_YAML=path/to/your/resume.yaml docker-compose up --build
    ```
 
-2. Place your resume data in `data/resume.yaml`
-
-3. Generate a resume:
-   ```bash
-   docker-compose run resume-generator
-   ```
-
-The generated LaTeX file will be available at `data/resume.tex`.
-
-## Local Installation
+## Local Development
 
 1. Clone the repository:
    ```bash
@@ -62,95 +119,10 @@ The generated LaTeX file will be available at `data/resume.tex`.
    pip install -e .
    ```
 
-## Command Line Interface
-
-Generate a resume from YAML data:
-
-```bash
-# Using default files (data/resume.yaml -> data/resume.tex)
-resume-yaml-to-latex
-
-# Or specify custom input/output files
-resume-yaml-to-latex path/to/resume.yaml path/to/output.tex
-```
-
-Options:
-- `--template`: Specify the template to use (default: friggeri)
-
-## Python API
-
-```python
-from resume_yaml_to_latex.parser import ResumeParser
-from resume_yaml_to_latex.templates.friggeri import FriggeriTemplate
-
-# Parse YAML data
-resume = ResumeParser.parse("data/resume.yaml")
-
-# Generate LaTeX
-template = FriggeriTemplate()
-template.set_resume(resume)
-latex_content = template.generate()
-
-# Save to file
-with open("data/resume.tex", "w") as f:
-    f.write(latex_content)
-```
-
-## YAML Format
-
-Your resume data should be structured in YAML format as follows:
-
-```yaml
-basic_info:
-  name: "Your Name"
-  email: "your.email@example.com"
-  phone: "+1 234 567 8900"
-  location: "City, Country"
-  website: "https://your-website.com"
-
-objective: "A brief professional summary"
-
-education:
-  - school: "University Name"
-    location: "City, Country"
-    degree: "Degree Name"
-    field: "Field of Study"
-    start_date: "2020"
-    end_date: "2024"
-    gpa: "3.8"
-
-experiences:
-  - company: "Company Name"
-    location: "City, Country"
-    position: "Job Title"
-    start_date: "2022"
-    end_date: "Present"
-    highlights:
-      - "Achievement or responsibility"
-      - "Another achievement or responsibility"
-
-skills:
-  - category: "Technical Skills"
-    items:
-      - "Skill 1"
-      - "Skill 2"
-  - category: "Soft Skills"
-    items:
-      - "Skill 1"
-      - "Skill 2"
-```
-
-## Templates
-
-### Friggeri Template
-
-The Friggeri template is a modern, clean design that includes:
-- Professional header with contact information
-- Two-column layout
-- Skills section with categorized items
-- Experience timeline
-- Education section
-- Clean typography and spacing
+3. Run the generator:
+   ```bash
+   python -m resume_yaml_to_latex path/to/resume.yaml path/to/output.tex
+   ```
 
 ## Contributing
 
