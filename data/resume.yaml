@@ -66,3 +66,15 @@ education:
     school: University of California, Berkeley
     startdate: "2019"
     enddate: "2022"
+
+publications:
+  - authors: "\\textbf{John Doe}, Sarah Smith, Michael Johnson"
+    title: "Scalable Microservices Architecture for Cloud-Native Applications"
+    conference: "International Conference on Cloud Computing (ICCC)"
+    location: "New York, USA"
+    date: "2023"
+  - authors: "\\textbf{John Doe}, David Brown, Emily Wilson"
+    title: "Performance Optimization Techniques for Distributed Systems"
+    conference: "IEEE Symposium on Distributed Computing (ISDC)"
+    location: "San Francisco, USA"
+    date: "2022"

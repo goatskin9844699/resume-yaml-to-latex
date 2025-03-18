@@ -43,10 +43,20 @@ class SkillCategory(BaseModel):
     skills: List[str]
 
 
+class Publication(BaseModel):
+    """Publication entry."""
+    authors: str
+    title: str
+    conference: str
+    location: str
+    date: str
+
+
 class Resume(BaseModel):
     """Complete resume data structure."""
     basic: BasicInfo
     objective: str
     education: List[Education]
     experiences: List[Experience]
-    skills: List[SkillCategory] 
+    skills: List[SkillCategory]
+    publications: Optional[List[Publication]] = Field(default_factory=list) 

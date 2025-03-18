@@ -82,6 +82,7 @@ class BaseTemplate(ABC):
             "skills": self.resume.skills,
             "experiences": self.resume.experiences,
             "education": self.resume.education,
+            "publications": self.resume.publications,
         }
 
     def _escape_latex(self, text: str) -> str:

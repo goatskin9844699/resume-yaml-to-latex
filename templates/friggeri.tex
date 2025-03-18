@@ -13,8 +13,7 @@
 
 % Custom commands for publications
 \newenvironment{publications}
-  {\section{Publications}
-   \begin{enumerate}[leftmargin=6mm, itemsep=4mm, label={[\arabic*]}]}
+  {\begin{enumerate}[leftmargin=6mm, itemsep=4mm, label={[\arabic*]}]}
   {\end{enumerate}}
 
 % Define a custom environment for skills
@@ -101,5 +100,16 @@ ${objective}
 	}
 <% endfor %>
 \end{entrylist}
+
+<% if publications %>
+\vspace{-9mm}
+\section{Publications}
+\vspace{-2mm}
+\begin{publications}
+<% for pub in publications %>
+\item ${pub.authors}. ${pub.title}. In \textit{${pub.conference}}, ${pub.location}, ${pub.date}.
+<% endfor %>
+\end{publications}
+<% endif %>
 
 \end{document} 
