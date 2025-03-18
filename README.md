@@ -1,17 +1,39 @@
-# Resume YAML to LaTeX Converter
+# Resume YAML to LaTeX
 
-A Python tool that converts YAML-formatted resume data into LaTeX documents using various templates.
+A Python tool to generate LaTeX resumes from YAML data. This tool allows you to maintain your resume data in a structured YAML format and convert it to a beautiful LaTeX document.
 
 ## Features
 
 - Convert YAML resume data to LaTeX format
-- Support for multiple LaTeX templates (currently Friggeri)
-- Easy to extend with new templates
-- Docker support for isolated environments
+- Support for multiple LaTeX templates (currently includes Friggeri template)
+- Docker support for easy deployment and consistent LaTeX compilation
+- Command-line interface for easy use
+- Python API for programmatic usage
 
-## Installation
+## Project Structure
 
-### Using Docker (Recommended)
+```
+resume-yaml-to-latex/
+├── data/                    # Input/output data directory
+│   ├── sample_resume.yaml   # Example resume data
+│   └── resume.tex          # Generated LaTeX file
+├── src/
+│   └── resume_yaml_to_latex/
+│       ├── __init__.py
+│       ├── main.py         # CLI implementation
+│       ├── models.py       # Data models
+│       ├── parser.py       # YAML parser
+│       └── templates/      # LaTeX templates
+│           ├── base.py
+│           └── friggeri.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── setup.py
+└── README.md
+```
+
+## Using Docker (Recommended)
 
 1. Build the Docker image:
    ```bash
@@ -20,10 +42,12 @@ A Python tool that converts YAML-formatted resume data into LaTeX documents usin
 
 2. Generate a resume:
    ```bash
-   docker-compose run resume-generator examples/sample_resume.yaml output/resume.tex
+   docker-compose run resume-generator data/sample_resume.yaml data/resume.tex
    ```
 
-### Local Installation
+The generated LaTeX file will be available in the `data` directory.
+
+## Local Installation
 
 1. Clone the repository:
    ```bash
@@ -36,98 +60,95 @@ A Python tool that converts YAML-formatted resume data into LaTeX documents usin
    pip install -e .
    ```
 
-## Usage
+## Command Line Interface
 
-### Command Line Interface
+Generate a resume from YAML data:
 
 ```bash
-resume-yaml-to-latex input.yaml output.tex [--template TEMPLATE]
+resume-yaml-to-latex data/sample_resume.yaml data/resume.tex
 ```
 
 Options:
-- `input.yaml`: Path to the YAML file containing resume data
-- `output.tex`: Path where to save the generated LaTeX file
-- `--template`: Template to use (default: friggeri)
+- `--template`: Specify the template to use (default: friggeri)
 
-### Python API
+## Python API
 
 ```python
 from resume_yaml_to_latex.parser import ResumeParser
 from resume_yaml_to_latex.templates.friggeri import FriggeriTemplate
 
 # Parse YAML data
-resume = ResumeParser.parse("resume.yaml")
+resume = ResumeParser.parse("data/sample_resume.yaml")
 
-# Create template and generate LaTeX
+# Generate LaTeX
 template = FriggeriTemplate()
 template.set_resume(resume)
 latex_content = template.generate()
 
 # Save to file
-with open("resume.tex", "w") as f:
+with open("data/resume.tex", "w") as f:
     f.write(latex_content)
 ```
 
 ## YAML Format
 
-The YAML file should follow this structure:
+Your resume data should be structured in YAML format as follows:
 
 ```yaml
-basic:
-  name: John Doe
-  address: San Francisco, CA, USA
-  phone: +1 (555) 123-4567
-  email: john.doe@example.com
+basic_info:
+  name: "Your Name"
+  email: "your.email@example.com"
+  phone: "+1 234 567 8900"
+  location: "City, Country"
+  website: "https://your-website.com"
 
-objective: A brief professional summary...
-
-skills:
-  - category: Technical
-    skills:
-      - Python
-      - JavaScript
-      - AWS
-  - category: Non-technical
-    skills:
-      - Strong problem-solving skills
-      - Excellent communication
-
-experiences:
-  - company: Tech Innovators Inc.
-    location: San Francisco, CA
-    titles:
-      - name: Lead Software Engineer
-        startdate: "2022"
-        enddate: "2024"
-    highlights:
-      - Led the development of a cloud-based platform...
-      - Implemented a microservices architecture...
+objective: "A brief professional summary"
 
 education:
-  - school: Stanford University
-    degrees:
-      - names:
-          - M.S. Computer Science
+  - school: "University Name"
+    location: "City, Country"
+    degree: "Degree Name"
+    field: "Field of Study"
+    start_date: "2020"
+    end_date: "2024"
+    gpa: "3.8"
+
+experiences:
+  - company: "Company Name"
+    location: "City, Country"
+    position: "Job Title"
+    start_date: "2022"
+    end_date: "Present"
+    highlights:
+      - "Achievement or responsibility"
+      - "Another achievement or responsibility"
+
+skills:
+  - category: "Technical Skills"
+    items:
+      - "Skill 1"
+      - "Skill 2"
+  - category: "Soft Skills"
+    items:
+      - "Skill 1"
+      - "Skill 2"
 ```
 
 ## Templates
 
 ### Friggeri Template
 
-A modern, clean template based on the Friggeri CV style. Features:
-- Professional layout
-- Clear section separation
-- Skills categorization
+The Friggeri template is a modern, clean design that includes:
+- Professional header with contact information
+- Two-column layout
+- Skills section with categorized items
 - Experience timeline
 - Education section
+- Clean typography and spacing
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 

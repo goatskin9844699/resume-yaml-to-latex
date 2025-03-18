@@ -4,6 +4,5 @@ services:
   resume-generator:
     build: .
     volumes:
-      - ./examples:/app/examples
-      - ./output:/app/output
-    command: examples/sample_resume.yaml output/resume.tex 
+      - ./data:/app/data
+    command: data/sample_resume.yaml data/resume.tex 
