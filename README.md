@@ -15,7 +15,7 @@ A Python tool to generate LaTeX resumes from YAML data. This tool allows you to 
 ```
 resume-yaml-to-latex/
 ├── data/                    # Input/output data directory
-│   ├── sample_resume.yaml   # Example resume data
+│   ├── resume.yaml         # Your resume data
 │   └── resume.tex          # Generated LaTeX file
 ├── src/
 │   └── resume_yaml_to_latex/
@@ -40,12 +40,14 @@ resume-yaml-to-latex/
    docker-compose build
    ```
 
-2. Generate a resume:
+2. Place your resume data in `data/resume.yaml`
+
+3. Generate a resume:
    ```bash
-   docker-compose run resume-generator data/sample_resume.yaml data/resume.tex
+   docker-compose run resume-generator
    ```
 
-The generated LaTeX file will be available in the `data` directory.
+The generated LaTeX file will be available at `data/resume.tex`.
 
 ## Local Installation
 
@@ -65,7 +67,11 @@ The generated LaTeX file will be available in the `data` directory.
 Generate a resume from YAML data:
 
 ```bash
-resume-yaml-to-latex data/sample_resume.yaml data/resume.tex
+# Using default files (data/resume.yaml -> data/resume.tex)
+resume-yaml-to-latex
+
+# Or specify custom input/output files
+resume-yaml-to-latex path/to/resume.yaml path/to/output.tex
 ```
 
 Options:
@@ -78,7 +84,7 @@ from resume_yaml_to_latex.parser import ResumeParser
 from resume_yaml_to_latex.templates.friggeri import FriggeriTemplate
 
 # Parse YAML data
-resume = ResumeParser.parse("data/sample_resume.yaml")
+resume = ResumeParser.parse("data/resume.yaml")
 
 # Generate LaTeX
 template = FriggeriTemplate()

@@ -5,4 +5,4 @@ services:
     build: .
     volumes:
       - ./data:/app/data
-    command: data/sample_resume.yaml data/resume.tex 
+    command: data/resume.yaml data/resume.tex 
